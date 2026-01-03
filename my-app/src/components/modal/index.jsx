@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { ConfigProvider, Modal } from "antd";
 import { createStyles, useTheme } from "antd-style";
-
+import { DictContext } from "../../components/context/index";
 const useStyle = createStyles(({ token }) => ({
   "my-modal-body": {
     background: token.blue1,
@@ -22,6 +22,8 @@ const useStyle = createStyles(({ token }) => ({
 }));
 
 const ModalInfo = ({ modalStatus, onModalChange, title }) => {
+  const dictContextInfo = useContext(DictContext);
+  // 获取上下文字典数据
   const { styles } = useStyle();
   const token = useTheme();
   const visible = modalStatus;
