@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./index.css";
 import Header from "./header/index";
+import LeftSide from "./left-side/index";
 function Index() {
   const [btnGroups, setBtnGroups] = useState([
     {
@@ -37,6 +38,7 @@ function Index() {
   return (
     <>
       <Header btnGroups={btnGroups}></Header>
+      <LeftSide></LeftSide>
     </>
   );
 }
