@@ -12,7 +12,7 @@ const btnInfo = ({ btnProps, onBtnChange }) => {
         danger={n.danger}
         onClick={() => {
           console.log(n.id);
-          onBtnChange();
+          onBtnChange(n);
         }}
       >
         {n.value}
