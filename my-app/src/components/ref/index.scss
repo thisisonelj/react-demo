@@ -1,0 +1,10 @@
+.test-ref-container {
+    margin-top: 10px;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .change {
+        margin-bottom: -20px;
+    }
+}
