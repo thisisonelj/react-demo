@@ -1,7 +1,7 @@
 /**
  *  商品筛选页
  */
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useEffectEvent } from "react";
 import "./index.scss";
 import Condition from "./components/condition/index";
 import Table from "./components/table/index";
@@ -9,13 +9,18 @@ import Tree from "./components/tree/index";
 import Pagetion from "./components/pagetion/index";
 import { tableTable, TreeData } from "./mock/index";
 import { Splitter } from "antd";
-
+import { useCacultePriceInfo } from "./hooks/index";
+import { message } from "antd";
+import BigNumber from "bignumber.js";
 const ShopContainer = () => {
+  const [messageApi] = message.useMessage();
   const [tableData, setTableData] = useState(tableTable);
   const [treeData, setTreeData] = useState(TreeData);
   const tableRef = useRef(null);
   const treeRef = useRef(null);
-
+  const [currentPrice, setCurrentPrice] = useState(0);
+  const { cacultePrice, cacultePriceResult } =
+    useCacultePriceInfo(currentPrice);
   // 树联动表格
   const handleTreeSelect = (shopType) => {
     const currentTableData = tableTable.filter((n) => {
@@ -60,10 +65,34 @@ const ShopContainer = () => {
     setTableData([]);
     setTreeData([]);
   };
+  // 监听价格变化
+  const priceChangeInfo = (val) => {
+    setCurrentPrice(val);
+  };
+  // 将提示从响应式里抽出来
+  const priceChangeTip = useEffectEvent(() => {
+    if (currentPrice && new BigNumber(currentPrice).isGreaterThan(0)) {
+      console.log("价格发生变化");
+    }
+  });
+  useEffect(() => {
+    const currentTableData = tableData.map((m) => {
+      return { ...m, shopPrice: cacultePriceResult };
+    });
+    setTableData(currentTableData);
+    priceChangeTip();
+    return () => {
+      // setCurrentPrice(0);
+    };
+  }, [currentPrice]);
   return (
     <>
       <div className="shop-container">
-        <Condition refresh={refreshTable} clear={onClear}></Condition>
+        <Condition
+          refresh={refreshTable}
+          clear={onClear}
+          priceVarible={priceChangeInfo}
+        ></Condition>
         <div className="content">
           <Splitter style={{ boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)" }}>
             <Splitter.Panel defaultSize="40%" min="20%" max="70%">

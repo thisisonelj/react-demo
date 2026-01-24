@@ -16,15 +16,13 @@ import moment from "moment";
 import dayjs from "dayjs";
 const formWrapperCol = {};
 const dateFormat = "YYYY/MM/DD";
-const ConditionContainer = ({ refresh, clear }) => {
+const ConditionContainer = ({ refresh, clear, priceVarible }) => {
   const [conditionForm] = Form.useForm();
   const [formLayout, setFormLayout] = useState("inline");
   const [inputNumberSwitch, setInputNumberSwitch] = useState(false);
-  const onShopChange = (value) => {
-    console.log(value);
-  };
+  const onShopChange = (value) => {};
   const onPriceChange = (value) => {
-    console.log(value);
+    priceVarible(value);
   };
   const onReset = () => {
     conditionForm.resetFields();
