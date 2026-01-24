@@ -3,15 +3,27 @@
  */
 import { useState } from "react";
 import "./index.scss";
-import { Button, Form, Input, Select, Space, DatePicker } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Select,
+  Space,
+  DatePicker,
+  InputNumber,
+} from "antd";
 import moment from "moment";
 import dayjs from "dayjs";
 const formWrapperCol = {};
 const dateFormat = "YYYY/MM/DD";
-const ConditionContainer = () => {
+const ConditionContainer = ({ refresh, clear }) => {
   const [conditionForm] = Form.useForm();
   const [formLayout, setFormLayout] = useState("inline");
+  const [inputNumberSwitch, setInputNumberSwitch] = useState(false);
   const onShopChange = (value) => {
+    console.log(value);
+  };
+  const onPriceChange = (value) => {
     console.log(value);
   };
   const onReset = () => {
@@ -23,6 +35,12 @@ const ConditionContainer = () => {
       dateFormat,
     );
     console.log(currentFormData);
+  };
+  const onFresh = () => {
+    refresh();
+  };
+  const onClear = () => {
+    clear();
   };
   return (
     <>
@@ -64,6 +82,18 @@ const ConditionContainer = () => {
               ]}
             />
           </Form.Item>
+          <Form.Item
+            name="shopPrice"
+            label="商品价格"
+            rules={[{ required: true }]}
+          >
+            <InputNumber
+              min={1}
+              max={100000}
+              onChange={onPriceChange}
+              controls={inputNumberSwitch}
+            />
+          </Form.Item>
           <Form.Item>
             <Space>
               <Button type="primary" htmlType="submit" onClick={onsubmit}>
@@ -71,6 +101,12 @@ const ConditionContainer = () => {
               </Button>
               <Button htmlType="button" onClick={onReset}>
                 重置
+              </Button>
+              <Button type="primary" onClick={onFresh}>
+                刷新
+              </Button>
+              <Button type="primary" onClick={onClear}>
+                清空
               </Button>
             </Space>
           </Form.Item>
