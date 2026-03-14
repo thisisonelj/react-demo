@@ -34,6 +34,26 @@ function Index() {
       danger: false,
       ghost: false,
     },
+    {
+      id: "add",
+      value: "增加",
+      size: "middle",
+      color: "cyan",
+      type: "default",
+      icon: "",
+      danger: false,
+      ghost: false,
+    },
+    {
+      id: "delete",
+      value: "减少",
+      size: "middle",
+      color: "cyan",
+      type: "default",
+      icon: "",
+      danger: false,
+      ghost: false,
+    },
   ]);
   return (
     <>

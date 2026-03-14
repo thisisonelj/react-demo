@@ -4,7 +4,13 @@ import { useRef, useState, useContext } from "react";
 import { Input } from "antd";
 import "./index.scss";
 import { DictContext } from "../../components/context/index";
+import { useDispatch, useSelector } from "react-redux";
+import { numAdd, numDelete } from "../../store/redux-store/actions";
 function HeaderInfo({ btnGroups }) {
+  const dispatch = useDispatch();
+  const numSelectors = useSelector((state) => {
+    return state.num;
+  });
   const inputRef = useRef(null);
   const inputStyle = {
     width: "200px",
@@ -19,13 +25,27 @@ function HeaderInfo({ btnGroups }) {
     setModalStatus(!modalStatus);
     setModalTilte(n.value);
   };
+
+  const onNumAdd = (obj) => {
+    dispatch(numAdd(1));
+    console.log(numSelectors);
+  };
+  const onNumMine = (obj) => {
+    dispatch(numDelete(1));
+    console.log(numSelectors);
+  };
   const modalChange = (status) => {
     setModalStatus(status);
   };
   return (
     <>
       <div className="header-container">
-        <ButtonInfo btnProps={btnGroups} onBtnChange={btnChaneg}></ButtonInfo>
+        <ButtonInfo
+          btnProps={btnGroups}
+          onBtnChange={btnChaneg}
+          onNumAdd={onNumAdd}
+          onNumMine={onNumMine}
+        ></ButtonInfo>
         <DictContext
           value={dictContextInfo.map((e) => {
             return {
@@ -39,7 +59,7 @@ function HeaderInfo({ btnGroups }) {
             title={modalTilte}
           ></ModalInfo>
         </DictContext>
-        <Input placeholder="Basic usage" ref={inputRef} style={inputStyle} />
+        <Input placeholder="Basic usage" ref={inputRef} style={inputStyle} value={numSelectors}/>
       </div>
     </>
   );

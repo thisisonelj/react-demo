@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Flex } from "antd";
 
-const btnInfo = ({ btnProps, onBtnChange }) => {
+const btnInfo = ({ btnProps, onBtnChange, onNumAdd, onNumMine }) => {
   const btnGroupDoms = btnProps.map((n) => {
     return (
       <Button
@@ -12,7 +12,15 @@ const btnInfo = ({ btnProps, onBtnChange }) => {
         danger={n.danger}
         onClick={() => {
           console.log(n.id);
-          onBtnChange(n);
+          if (n.id !== "add" && n.id !== "delete") {
+            onBtnChange(n);
+          } else {
+            if (n.id == "add") {
+              onNumAdd();
+            } else {
+              onNumMine();
+            }
+          }
         }}
       >
         {n.value}
