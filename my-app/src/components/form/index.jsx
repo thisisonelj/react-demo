@@ -7,6 +7,7 @@ import "./index.scss";
 import { formCrudReducer } from "../../store/index.js";
 // 生成随机数
 function getRandomString(length = 8) {
+  console.log(length);
   const chars =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
@@ -41,23 +42,21 @@ function FormInfo() {
   };
   const formListInfo = formListTasks.map((e) => {
     return (
-      <>
-        <div key={e.id} className="item">
-          <Input value={e.inputText}></Input>
-          <Button type="primary" onClick={incrementInfo}>
-            增加
-          </Button>
-          <Button
-            type="primary"
-            danger
-            onClick={() => {
-              return decrementInfo(e);
-            }}
-          >
-            删除
-          </Button>
-        </div>
-      </>
+      <div key={e.id} className="item">
+        <Input value={e.inputText}></Input>
+        <Button type="primary" onClick={incrementInfo}>
+          增加
+        </Button>
+        <Button
+          type="primary"
+          danger
+          onClick={() => {
+            return decrementInfo(e);
+          }}
+        >
+          删除
+        </Button>
+      </div>
     );
   });
   return (
